@@ -8,5 +8,6 @@ namespace InvestigationGame.Models
 {
     internal class Sensor
     {
+       
     }
 }
