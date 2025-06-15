@@ -11,13 +11,11 @@ namespace InvestigationGame.Models
         public SensorType Type { get; protected set; }
         public bool IsActive { get; set; }
         public abstract void Activate();
-
-
     }
 
-    internal class Audio: Sensor
+    internal class Audio : Sensor
     {
-        public Audio() 
+        public Audio()
         {
             Type = SensorType.Audio;
         }
@@ -28,7 +26,17 @@ namespace InvestigationGame.Models
         }
     }
 
+    internal class Thermal : Sensor
+    {
+        public Thermal()
+        {
+            Type = SensorType.Thermal;
+        }
 
-
-
+        public override void Activate()
+        {
+            IsActive = true;
+        }
+    }
 }
+
