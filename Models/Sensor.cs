@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace InvestigationGame.Models
 {
-    internal class Sensor
+    internal abstract class Sensor
     {
-       
+        public SensorType Type { get; protected set; }
+        public bool IsActive { get; private set; }
+        public abstract void Activate();
     }
 }

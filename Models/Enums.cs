@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace InvestigationGame.Models
 {
-    internal class Enums
-    {
         public enum SensorType
         {
             Audio,
@@ -26,5 +24,5 @@ namespace InvestigationGame.Models
             SeniorCommander,
             OrganizationLeader
         }
-    }
+  
 }
