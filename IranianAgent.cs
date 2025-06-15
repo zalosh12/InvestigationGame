@@ -59,19 +59,24 @@ namespace InvestigationGame
             foreach(var sensor in AttachedSensors)
             {
                 sensor.Activate();
-                if (sensor.IsActive)
-                {
-                    SensorType type = (SensorType)Enum.Parse(typeof(SensorType),sensor.Type);
+                if (!sensor.IsActive)
+                    continue;
+                SensorType type = (SensorType)Enum.Parse(typeof(SensorType), sensor.Type);
+                attachedSensorsCount[type] =
+                            attachedSensorsCount.GetValueOrDefault(type) + 1;
 
-                    if (attachedSensorsCount.ContainsKey(type))
-                    {
-                        attachedSensorsCount[type]++;
-                    }
-                    else
-                    {
-                        attachedSensorsCount[type] = 1;
-                    }
-                }
+                //{
+                //    SensorType type = (SensorType)Enum.Parse(typeof(SensorType),sensor.Type);
+
+                //    //if (attachedSensorsCount.ContainsKey(type))
+                //    //{
+                //    //    attachedSensorsCount[type]++;
+                //    //}
+                //    //else
+                //    //{
+                //    //    attachedSensorsCount[type] = 1;
+                //    //}
+                //}
             }
 
             foreach(var weakness in SecretWeaknesses)

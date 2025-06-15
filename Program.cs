@@ -25,14 +25,14 @@ namespace InvestigationGame
                 Console.WriteLine("4. Motion");
                 Console.Write("Enter option number (1-4): ");
 
-                string input = Console.ReadLine();
+                string? input = Console.ReadLine();
                 Sensor sensor = input switch
                 {
                     "1" => new Audio(),
                     "2" => new Thermal(),
                     "3" => new Pulse(),
                     "4" => new Motion(),
-                    _ => null
+                    _ => null!
                 };
 
                 if (sensor == null)
