@@ -9,10 +9,10 @@ namespace InvestigationGame.Models
         public enum SensorType
         {
             Audio,
-            Thermal,
+            //Thermal,
             Pulse,
-            Motion,
-            Magnetic,
+            //Motion,
+            //Magnetic,
             Signal,
             Light
         }
