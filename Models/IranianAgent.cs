@@ -14,6 +14,8 @@ namespace InvestigationGame.Models
 
         protected List<Sensor> AttachedSensors;
 
+        protected int TurnCounter = 0;
+
         private List<string> HiddenInfo;
         public List<string> RevealedInfo { get; private set; } = new();
 
@@ -24,6 +26,11 @@ namespace InvestigationGame.Models
 
             GenerateSecretWeaknesses();
             GenerateHiddenInfo();
+        }
+
+        public virtual void OnTurnPassed()
+        {
+            TurnCounter++;
         }
 
         public void GenerateSecretWeaknesses()
@@ -71,7 +78,8 @@ namespace InvestigationGame.Models
 
         public void AttachedSensor(Sensor newSensor)
         {
-            AttachedSensors.Add(newSensor);
+            if(SecretWeaknesses.ContainsKey(newSensor.Type))
+                  AttachedSensors.Add(newSensor);
         }
 
 
@@ -84,8 +92,8 @@ namespace InvestigationGame.Models
             foreach (var sensor in AttachedSensors)
             {
                 sensor.Activate(this);
-                if (!sensor.IsActive)
-                    continue;
+                //if (!sensor.IsActive)
+                //    continue;
                 SensorType type = sensor.Type;
                 attachedSensorsCount[type] =
                             attachedSensorsCount.GetValueOrDefault(type) + 1;
@@ -120,15 +128,57 @@ namespace InvestigationGame.Models
     internal class SquadLeader : IranianAgent
     {
         public SquadLeader() : base(4) { }
+
+        public override void OnTurnPassed()
+        {
+            TurnCounter++;
+            if (TurnCounter % 3 == 0 && AttachedSensors.Count > 0)
+            {
+                int i = random.Next(AttachedSensors.Count);
+                AttachedSensors.RemoveAt(i);
+            }
+        }
     }
 
     internal class SeniorCommander : IranianAgent
     {
         public SeniorCommander() : base(6) { }
+
+        public override void OnTurnPassed()
+        {
+            TurnCounter++;
+            if (TurnCounter % 3 == 0)
+            {
+                for (int i = 0; i < 2 && AttachedSensors.Count > 0; i++)
+                {
+                    int index = random.Next(AttachedSensors.Count);
+                    AttachedSensors.RemoveAt(index);
+                }
+            }
+        }
     }
+
 
     internal class OrganizationLeader : IranianAgent
     {
         public OrganizationLeader() : base(8) { }
+
+        public override void OnTurnPassed()
+        {
+            TurnCounter++;
+
+            if (TurnCounter % 3 == 0 && AttachedSensors.Count > 0)
+            {
+                int i = random.Next(AttachedSensors.Count);
+                AttachedSensors.RemoveAt(i);
+            }
+
+            if (TurnCounter % 10 == 0)
+            {
+                AttachedSensors.Clear();
+                GenerateSecretWeaknesses();
+            }
+        }
     }
+
 }
